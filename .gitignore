@@ -12,3 +12,4 @@ db.sqlite3
 *.h5
 .env
 .venv
+.venv*
