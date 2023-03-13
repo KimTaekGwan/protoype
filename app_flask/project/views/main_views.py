@@ -14,11 +14,23 @@ def main():
     # return redirect(url_for('main_views.upload'))
 
 
-@bp.route('/upload')  
+@bp.route('/upload', methods = ['GET', 'POST'])
 def upload():
-    print(os.listdir(path_data))
-    # print(path_cwd)
-    return render_template("pages/file_upload_form.html")  
+    if request.method == 'POST':
+        # print('file 저장')
+        f = request.files['file']
+        path_input = '/Users/ktg/Desktop/protoype/data/input/'
+        
+        path = path_input + f.filename
+        f.save(path)
+        
+        file_list = os.listdir(path_input)
+        file_list = [file for file in file_list if not file.endswith(".md")]
+        file_dict = {file:path_input+file for file in file_list}
+        
+        return render_template("pages/file_upload_form.html", file_dict=file_dict)  
+    else:
+        return render_template("pages/file_upload_form.html")  
 
 
 @bp.route('/success', methods = ['POST'])  

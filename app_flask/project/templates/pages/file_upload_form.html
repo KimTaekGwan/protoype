@@ -3,11 +3,21 @@
     <title>upload</title>
   </head>
   <body>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" multiple />
+      <input type="submit" value="Upload" id="btnUpload" />
+    </form>
+    <div>
+      {% if file_dict %}{% for file, path in file_dict.items() %}
+      <ul id="category">{{file}}</ul>
+      <li>{{path}}</li>
+      {% endfor %} {% endif %}
+      <ul id="category"></ul>
+    </div>
     <form action="/success" method="post" enctype="multipart/form-data">
       <input type="file" name="file" />
-      <input type="submit" value="Upload" />
+      <input type="submit" value="Upload" id="btnUpload" />
     </form>
-    <div class="filelist"></div>
   </body>
   <script src="{{ url_for('static', filename='upload_script.js') }}"></script>
 </html>
