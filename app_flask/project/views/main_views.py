@@ -19,7 +19,7 @@ def upload():
     if request.method == 'POST':
         # print('file 저장')
         f = request.files['file']
-        path_input = '/Users/ktg/Desktop/protoype/data/input/'
+        path_input = '../data/input/'
         
         path = path_input + f.filename
         f.save(path)
