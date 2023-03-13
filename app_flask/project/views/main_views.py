@@ -1,6 +1,6 @@
 # myproject/sesac/views/post_views.py
 from flask import url_for, request, redirect, Blueprint, render_template
-from project.db import db
+from project.conn.db import db
 
 import os
 
