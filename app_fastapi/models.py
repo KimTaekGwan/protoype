@@ -9,5 +9,7 @@ class SummaryRequest(BaseModel):
     min_length: Optional[int] = 32      # 요약문의 최소 길이 설정
     num_beams: Optional[int] = 4        # 문장 생성시 다음 단어를 탐색하는 영역의 개수 
 
-class TextRequest(BaseModel):    
-    text: str
+class FileRequest(BaseModel):
+    file_name: str
+    file_path: str
+    user_id: str
