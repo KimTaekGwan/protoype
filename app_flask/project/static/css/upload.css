@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+
+#fileList {
+  margin-top: 20px;
+}
+
+.fileItem {
+  margin-bottom: 10px;
+}
+
+.fileName {
+  display: inline-block;
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fileButton {
+  display: inline-block;
+  margin-left: 10px;
+}

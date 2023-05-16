@@ -1,8 +1,10 @@
-from extract_info import ExtractInfo
+from extract_info import PPT_Info_Extract, Util
 from image_classification import ImageClassification
 from img2text import OCR, Captioning
 from text_preprocessing import TextPreprocessing
 from text2vector import Text2Vector
+
+import os
 
 
 class Doc2Vector:
@@ -18,14 +20,23 @@ class Doc2Vector:
         Returns:
             dict: 문서 벡터화
         """
+
+        # (0) 파일 업로드
+        print('# (0) 파일 업로드')
+        util = Util()
+        util.input_files_update()
+
         # (2) 문서 내 텍스트 및 이미지 추출
-        extractinfo = ExtractInfo()
+        print('# (2) 문서 내 텍스트 및 이미지 추출')
+        extractinfo = PPT_Info_Extract()
         infoDict = extractinfo.run(path)
+        # print(infoDict)
 
         # infoDict = {1: {'text': [],  # 1번 페이지에서 추출한 텍스트
         #                 'img': []}}  # 1번 페이지에서 추출한 이미지 경로
 
-        # (3) 이미지 유형 분류
+        # (3) 이미지 유형 분류 및 이미지2텍스트
+        print('# (3) 이미지 유형 분류')
         imgclsfc = ImageClassification()
         ocr = OCR()
         captioning = Captioning()
@@ -33,6 +44,7 @@ class Doc2Vector:
         for _, typedata in infoDict.items():
             typedata['img2text'] = []
             for img_path in typedata['img']:
+                # 분류 모델 X, img_type 항상 1
                 img_type = imgclsfc.run(img_path=img_path)
 
                 if img_type == 1:   # 1: 표 및 프로세스 (ocr)
@@ -40,6 +52,7 @@ class Doc2Vector:
                 elif img_type == 2:  # 2: 그림 (ImageCaptioning)
                     text = captioning.run(img_path=img_path)
                 typedata['img2text'].append(text)
+        # print(infoDict)
 
         # (4) 텍스트 합치기
         # infoDict = {1: {'text': [],  # 1번 페이지에서 추출한 텍스트
@@ -61,11 +74,16 @@ class Doc2Vector:
         for _, text in docInfo['page'].items():
             docInfo['text'] += text
 
+        # print(docInfo)
+
         # (5) 텍스트 전처리
+        print('# (5) 텍스트 전처리')
         textprepro = TextPreprocessing()
         docInfo = textprepro.run(docInfo=docInfo)
+        # print(docInfo)
 
         # (6) BERT 문서 벡터화
+        print('# (6) BERT 문서 벡터화')
         t2v = Text2Vector()
         docInfo = t2v.run(docInfo=docInfo)
 
@@ -73,8 +91,13 @@ class Doc2Vector:
 
 
 if __name__ == '__main__':
+    # db 관련
+    util = Util()
+    util.input_files_update()
+
     process = Doc2Vector()
 
-    path = ""
+    # path = "1 Intro.pptx"
+    path = "디비캡_김택관.pptx"
 
-    process.run(path)
+    print(process.run(path))

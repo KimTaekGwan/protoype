@@ -29,21 +29,24 @@ def check():
 
 @bp.route('/upload', methods=['GET', 'POST'])
 def upload():
+    path_input = '../db/data/input/'
+    file_list = os.listdir(path_input)
+    file_list = [file for file in file_list if not file.endswith(".md")]
+    file_dict = {file: path_input+file for file in file_list}
+
     if request.method == 'POST':
         # print('file 저장')
+        print(os.getcwd())
         f = request.files['file']
-        path_input = '../data/input/'
 
         path = path_input + f.filename
         f.save(path)
 
-        file_list = os.listdir(path_input)
-        file_list = [file for file in file_list if not file.endswith(".md")]
-        file_dict = {file: path_input+file for file in file_list}
-
-        return render_template("pages/file_upload_form.html", file_dict=file_dict)
+        return render_template("pages/file_upload_form.html")
+        # return render_template("pages/file_upload_form.html", file_dict=file_dict)
     else:
         return render_template("pages/file_upload_form.html")
+        # return render_template("pages/file_upload_form.html", file_dict=file_dict)
 
 
 @bp.route('/success', methods=['POST'])

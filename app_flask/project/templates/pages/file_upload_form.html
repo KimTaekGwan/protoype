@@ -1,22 +1,43 @@
 <html>
   <head>
     <title>upload</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/upload.css') }}"
+    />
   </head>
   <body>
+    <h1>Document File Uploader</h1>
+    <!-- <input
+      type="file"
+      id="fileUpload"
+      accept=".doc,.docx,.pdf,.pptx"
+      multiple
+    />
+    <button onclick="uploadFile()">Upload</button>
+    <div id="fileList"></div> -->
+
+    <button type="button" class="btn btn-primary" id="btnAppend">추가</button>
     <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" multiple />
-      <input type="submit" value="Upload" id="btnUpload" />
+      <input
+        type="file"
+        id="upload"
+        name="file"
+        accept=".doc, .docx, .pdf, .pptx"
+        multiple
+      />
+      <input
+        type="submit"
+        value="Upload"
+        onclick="uploadFile()"
+        id="btnUpload"
+      />
     </form>
-    <div>
-      {% if file_dict %}{% for file, path in file_dict.items() %}
-      <ul id="category">
-        {{file}}
-      </ul>
-      <li>{{path}}</li>
-      {% endfor %} {% endif %}
-      <ul id="category"></ul>
-    </div>
-    <a href="{{url_for()}}"></a>
+    <div id="fileList"></div>
+    <ul id="file-list"></ul>
+
+    <a href="{{url_for('main_views.main')}}">홈으로 가기</a>
   </body>
   <script src="{{ url_for('static', filename='js/upload_script.js') }}"></script>
 </html>

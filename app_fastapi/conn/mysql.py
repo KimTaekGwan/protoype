@@ -13,8 +13,8 @@ mysql_params = {
 conn = pymysql.connect(**mysql_params)
 
 db = connect(host='localhost',
-                port= 3306,
-                user='root',
-                password='1234',
-                database='checker',
-                cursorclass=cursors.DictCursor)
+             port=3306,
+             user='root',
+             password='1234',
+             database='checker',
+             cursorclass=cursors.DictCursor)

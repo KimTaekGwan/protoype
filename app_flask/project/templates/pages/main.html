@@ -15,6 +15,13 @@
     <div>
       <a href="{{url_for('main_views.upload')}}">업로드 하러가기</a>
     </div>
-    <script src="{{ url_for('static', filename='main_script.js') }}"></script>
+    <div>
+      <button type="button" class="btn btn-primary" id="doc2vec_btn">
+        검색
+      </button>
+      <div id="result">ddd</div>
+      <div id="fastapi_res">ddd</div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main_script.js') }}"></script>
   </body>
 </html>

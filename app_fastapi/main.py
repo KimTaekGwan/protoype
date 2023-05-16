@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from api import (api_image, api_xai, api_nlp,
                  api_test, api_service)
+from api import api_doc2vector
 
 
 # from unicorn import UnicornMiddleware
@@ -14,7 +15,7 @@ def include_router(app):
     app.include_router(api_nlp.router, prefix='/nlp')
     app.include_router(api_test.router, prefix='/test')
     app.include_router(api_service.router, prefix='/service')
-    # app.include_router(api_doc2vector.router, prefix='/doc2vec')
+    app.include_router(api_doc2vector.router, prefix='/doc2vec')
 
 
 def start_application():

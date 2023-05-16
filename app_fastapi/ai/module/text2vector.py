@@ -32,9 +32,11 @@ class Text2Vector:
 
         for page_num, text in docInfo['page'].items():
             resInfo['page'][page_num] = self._get_embeddings(
-                texts=np.array(text))
+                texts=[text])
 
-        resInfo['text'] = self._get_embeddings(texts=np.array(docInfo['text']))
+        # print([docInfo['text']])
+        resInfo['text'] = self._get_embeddings(
+            texts=[docInfo['text']])
         return resInfo
 
     def _get_embeddings(self, texts: list) -> list:
