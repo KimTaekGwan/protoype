@@ -86,3 +86,7 @@
 ## API
 
 ### Document 2 Vector
+
+- database/data/input 에 파일 넣기
+  > 현재 pptx 파일만 가능
+- <img width="1356" alt="image" src="https://github.com/KimTaekGwan/protoype/assets/51080266/c9328a11-0bca-4a7d-b9ca-f0de60d7f8b6">
