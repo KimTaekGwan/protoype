@@ -31,7 +31,7 @@
   - windows 기준
 
     ```zsh
-    type > activate
+    type nul > activate
     ```
 
 - activate 파일 내에 내용 추가
