@@ -31,7 +31,7 @@
   - windows 기준
 
     ```zsh
-    type NUL > activate
+    type > activate
     ```
 
 - activate 파일 내에 내용 추가
@@ -45,7 +45,7 @@
   - windows 기준
 
     ```zsh
-    source .venv/Scripts/activate
+    .venv/Scripts/activate
     ```
 
 - 가상한경 실행
