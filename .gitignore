@@ -16,7 +16,10 @@ db.sqlite3
 .venv
 .venv*
 
-database
+database/data/image/*
 activate
+
+!README.md
+!test.pptx
 
 google_cloud_python.json

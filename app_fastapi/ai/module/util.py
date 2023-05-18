@@ -8,13 +8,13 @@ import numpy as np
 class FileUtil:
     def __init__(self) -> None:
         # print(os.getcwd())
-        self.input_dir = '../db/data/input/'
-        self.res_dir = '../db/data/image/'
-        self.orignal_dir = '../db/data/original/'
+        self.input_dir = '../database/data/input/'
+        self.res_dir = '../database/data/image/'
+        self.orignal_dir = '../database/data/original/'
 
     def input_files_update(self):
         for file_name in os.listdir(self.input_dir):
-            print(file_name)
+            # print(file_name)
             self._dir_Update(file_name)
 
     def _dir_Update(self, file_name):
@@ -22,6 +22,9 @@ class FileUtil:
         input_path = os.path.join(self.input_dir, file_name)
         img_path = os.path.join(self.res_dir, name)
         data_path = os.path.join(self.orignal_dir, file_name)
+
+        if ext == '.md':
+            return
 
         if os.path.isfile(data_path):
             with open(input_path, 'rb') as input_file, open(data_path, 'rb') as data_file:
