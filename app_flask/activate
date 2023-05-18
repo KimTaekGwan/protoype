@@ -1,3 +1,0 @@
-export FLASK_APP=app
-export FLASK_DEBUG=true
-source .venv_flask/bin/activate
