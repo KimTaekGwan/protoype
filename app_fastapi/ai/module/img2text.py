@@ -4,7 +4,8 @@ from google.cloud import vision_v1
 
 class OCR:
     def __init__(self) -> None:
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'app_fastapi/ai/module/google_cloud_python.json'
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = \
+            r'ai/module/google_cloud_python.json'
         pass
 
     def run(self, img_path: str) -> str:

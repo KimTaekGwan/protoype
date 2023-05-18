@@ -1,9 +1,9 @@
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 
-from pdfminer.high_level import extract_text, extract_pages
-from pdfminer.layout import LTTextContainer
-import PyPDF2
+# from pdfminer.high_level import extract_text, extract_pages
+# from pdfminer.layout import LTTextContainer
+# import PyPDF2
 # import fitz
 
 from collections import defaultdict
@@ -14,43 +14,13 @@ import os
 import shutil
 from bs4 import BeautifulSoup
 
-
-class Util:
-    def __init__(self) -> None:
-        self.input_dir = 'db/data/input/'
-        self.res_dir = 'db/data/image/'
-        self.orignal_dir = 'db/data/original/'
-
-    def input_files_update(self):
-        for file_name in os.listdir(self.input_dir):
-            print(file_name)
-            self._dir_Update(file_name)
-
-    def _dir_Update(self, file_name):
-        name, ext = os.path.splitext(file_name)
-        input_path = os.path.join(self.input_dir, file_name)
-        img_path = os.path.join(self.res_dir, name)
-        data_path = os.path.join(self.orignal_dir, file_name)
-
-        if os.path.isfile(data_path):
-            with open(input_path, 'rb') as input_file, open(data_path, 'rb') as data_file:
-                input_content = input_file.read()
-                data_content = data_file.read()
-                if input_content == data_content:
-                    print(f"{file_name} already exists")
-                else:
-                    # file 이름 변경 후 다시 재귀하기
-                    print(f"{file_name} 이름이 같은 파일이 존재 - 이름을 변경해서 올려주세요")
-                    # os.rename()
-        else:
-            os.makedirs(img_path)
-            shutil.move(input_path, self.orignal_dir)
+from ai.module.util import FileUtil
 
 
 class ExtractInfo:
     def __init__(self) -> None:
         # self.tp = Text_Preprocessing()
-        self.util = Util()
+        self.fileutil = FileUtil()
         self.kiwi = Kiwi()
         self.reset()
 
@@ -105,7 +75,7 @@ class PPT_Info_Extract(ExtractInfo):
         self.reset()
         self.file_name = file_name
         self.name, self.ext = os.path.splitext(file_name)
-        path = self.util.orignal_dir + file_name
+        path = self.fileutil.orignal_dir + file_name
         self.parsed = Presentation(path)
 
         for idx, slide in enumerate(self.parsed.slides):
@@ -174,7 +144,7 @@ class PPT_Info_Extract(ExtractInfo):
                     if ext in ['png', 'jpeg', 'jpg'] and size[0] >= 200 and size[1] >= 200:
                         self.img_num += 1
                         num = str(self.img_num).zfill(3)
-                        save_path = f"{self.util.res_dir}{self.name}/image_{num}.{ext}"
+                        save_path = f"{self.fileutil.res_dir}{self.name}/image_{num}.{ext}"
                         with open(save_path, "wb") as file:
                             file.write(image_blob)
                         self.image_blob.append(image_blob)
@@ -195,8 +165,8 @@ if __name__ == '__main__':
 
     # res = extractinfo.run(path)
     # print(os.listdir('db/data/input/'))
-    util = Util()
-    util.input_files_update()
+    fileutil = FileUtil()
+    fileutil.input_files_update()
 
     ppt = PPT_Info_Extract()
     ppt.extract('1 Intro.pptx')

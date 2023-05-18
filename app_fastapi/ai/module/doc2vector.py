@@ -1,8 +1,10 @@
-from extract_info import PPT_Info_Extract, Util
-from image_classification import ImageClassification
-from img2text import OCR, Captioning
-from text_preprocessing import TextPreprocessing
-from text2vector import Text2Vector
+from ai.module.util import FileUtil
+from ai.module.extract_info import PPT_Info_Extract
+from ai.module.image_classification import ImageClassification
+from ai.module.img2text import OCR, Captioning
+from ai.module.text_preprocessing import TextPreprocessing
+from ai.module.text2vector import Text2Vector
+
 
 import os
 
@@ -23,8 +25,8 @@ class Doc2Vector:
 
         # (0) 파일 업로드
         print('# (0) 파일 업로드')
-        util = Util()
-        util.input_files_update()
+        fileutil = FileUtil()
+        fileutil.input_files_update()
 
         # (2) 문서 내 텍스트 및 이미지 추출
         print('# (2) 문서 내 텍스트 및 이미지 추출')
@@ -92,12 +94,9 @@ class Doc2Vector:
 
 if __name__ == '__main__':
     # db 관련
-    util = Util()
-    util.input_files_update()
-
     process = Doc2Vector()
 
     # path = "1 Intro.pptx"
-    path = "디비캡_김택관.pptx"
+    path = "test.pptx"
 
     print(process.run(path))

@@ -3,7 +3,6 @@ from api import (api_image, api_xai, api_nlp,
                  api_test, api_service)
 from api import api_doc2vector
 
-
 # from unicorn import UnicornMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware

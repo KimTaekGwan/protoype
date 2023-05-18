@@ -2,6 +2,8 @@ fastapi
 uvicorn
 pydantic
 requests
+cryptography
+pymysql
 
 # 문서 내 정보 추출
 python-pptx
@@ -18,3 +20,6 @@ tqdm
 google-cloud-vision
 pytesseract
 Pillow
+
+transformers
+torch
