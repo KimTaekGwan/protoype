@@ -135,20 +135,23 @@ class PPT_Info_Extract(ExtractInfo):
         else:
             # yes image
             if shape.shape_type == MSO_SHAPE_TYPE.PICTURE:
-                image_blob = shape.image.blob
+                try:
+                    image_blob = shape.image.blob
 
-                # 이미지 중복 체크
-                if image_blob not in self.image_blob:
-                    ext = shape.image.ext  # - (확장명)
-                    size = shape.image.size
-                    if ext in ['png', 'jpeg', 'jpg'] and size[0] >= 200 and size[1] >= 200:
-                        self.img_num += 1
-                        num = str(self.img_num).zfill(3)
-                        save_path = f"{self.fileutil.res_dir}{self.name}/image_{num}.{ext}"
-                        with open(save_path, "wb") as file:
-                            file.write(image_blob)
-                        self.image_blob.append(image_blob)
-                        self.img_dict[self.img_num].append(save_path)
+                    # 이미지 중복 체크
+                    if image_blob not in self.image_blob:
+                        ext = shape.image.ext  # - (확장명)
+                        size = shape.image.size
+                        if ext in ['png', 'jpeg', 'jpg'] and size[0] >= 200 and size[1] >= 200:
+                            self.img_num += 1
+                            num = str(self.img_num).zfill(3)
+                            save_path = f"{self.fileutil.res_dir}{self.name}/image_{num}.{ext}"
+                            with open(save_path, "wb") as file:
+                                file.write(image_blob)
+                            self.image_blob.append(image_blob)
+                            self.img_dict[self.img_num].append(save_path)
+                except:
+                    pass
             # no image
             else:
                 # yes text
