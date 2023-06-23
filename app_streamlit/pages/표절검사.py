@@ -7,7 +7,9 @@ import os
 
 
 from api.util import save_uploaded_file
-from api.request_fastapi import req_doc2vec
+from api.request_fastapi import (req_doc2vec,
+                                 req_add_vector,
+                                 req_search_db)
 from api.manage_vetcordb import Initdb
 # Input Layout 생성
 
@@ -16,12 +18,6 @@ def createInputLayout(elements):
     file = st.file_uploader('파일 선택(csv or excel)',
                             type=['pdf', 'pptx', 'ppt'])
 
-    if st.button('검색'):
-        with st.expander("검색 결과"):
-            with st.spinner('Wait for it...'):
-                res = req_doc2vec(file_name=file.name)
-                query_result = chroma_db.query(res['text'])
-                st.write(query_result)
     if file is not None:
         # 파일 읽기
         name, ext = file.name.split('.')[0], file.name.split('.')[-1]
@@ -33,14 +29,15 @@ def createInputLayout(elements):
                 with st.spinner('Wait for it...'):
                     st.write(req_doc2vec(file_name=file.name))
 
+        if st.button('검색'):
+            with st.expander("검색 결과"):
+                with st.spinner('Wait for it...'):
+                    st.write(req_search_db(file_name=file.name))
+
         if st.button('db 추가'):
-            with st.spinner('Wait for it...'):
-                res = req_doc2vec(file_name=file.name)
-                embedding = res['text']
-                document = '?'
-                metadata = {'file_name': file.name}
-                id = file.name
-                chroma_db.db_add(embedding, document, metadata, id)
+            with st.expander("검색 결과"):
+                with st.spinner('Wait for it...'):
+                    st.write(req_add_vector(file_name=file.name))
 
 
 #############################################

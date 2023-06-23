@@ -18,12 +18,17 @@ util = Util()
 
 @router.post("/add/{file_name}", tags=['Chroma'])
 async def add_file(file_name: str):
-    name, _ = os.path.splitext(file_name)
-    process = Doc2Vector()
-    resDict = process.run(file_name)
+    try:
+        name, _ = os.path.splitext(file_name)
+        process = Doc2Vector()
+        resDict = process.run(file_name)
 
-    resDict = util.convert_numpy_to_list(resDict)
-    db.db_add(resDict['text'], name, {'file_name': name}, name)
+        resDict = util.convert_numpy_to_list(resDict)
+        param = {'path': file_name, 'file_name': name}
+        db.db_add(resDict['text'], name, param, name)
+        return JSONResponse(content={'cond': True})
+    except:
+        return JSONResponse(content={'cond': False})
 
 
 @router.post("/query/{file_name}", tags=['Chroma'])
