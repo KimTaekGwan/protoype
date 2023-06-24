@@ -10,12 +10,8 @@ import fitz
 from PIL import Image
 
 from collections import defaultdict
-from kiwipiepy import Kiwi
 
-import re
 import os
-import shutil
-from bs4 import BeautifulSoup
 
 from ai.module.util import FileUtil
 
@@ -24,7 +20,6 @@ class ExtractInfo:
     def __init__(self) -> None:
         # self.tp = Text_Preprocessing()
         self.fileutil = FileUtil()
-        self.kiwi = Kiwi()
         self.reset()
 
     def reset(self):
@@ -214,6 +209,7 @@ class DOCX_Info_Extract(ExtractInfo):
                         self.img_dict[self.img_num].append(save_path)
 
 
+# https://neurondai.medium.com/how-to-extract-text-from-a-pdf-using-pymupdf-and-python-caa8487cf9d
 class PDF_Info_Extract(ExtractInfo):
     def __init__(self) -> None:
         super().__init__()
@@ -253,7 +249,7 @@ class PDF_Info_Extract(ExtractInfo):
         self.name, self.ext = os.path.splitext(file_name)
         path = self.fileutil.orignal_dir + file_name
         self.pdf = fitz.open(path)
-
+        # print(len(self.pdf))
         for idx, page_content in enumerate(self.pdf, start=1):
             self.page_num = idx
             # 텍스트 추출
@@ -262,10 +258,13 @@ class PDF_Info_Extract(ExtractInfo):
             self._extract_image(page_content)
 
     def _extract_text(self, page_content):
-        text = page_content.get_text()
-        if text != "":
-            self.text_dict['page'][self.page_num].append(
-                text.strip())
+        try:
+            text = page_content.get_text()
+            if text != "":
+                self.text_dict['page'][self.page_num].append(
+                    text.strip())
+        except:
+            pass
 
     def _extract_image(self, page_content):
         images_list = page_content.get_images()
@@ -273,7 +272,7 @@ class PDF_Info_Extract(ExtractInfo):
             # Extract image
             image = self.pdf.extract_image(img_info[0])
             ext = image['ext']
-            size = image['height'], image['width']
+            size = int(image['height']), int(image['width'])
             if ext in ['png', 'jpeg', 'jpg'] and size[0] >= 200 and size[1] >= 200:
                 self.img_num += 1
                 num = str(self.img_num).zfill(3)
